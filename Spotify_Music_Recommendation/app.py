@@ -1,11 +1,10 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, request
 import pandas as pd
 
-import sys, os, os.path
-sys.path.insert(0, os.path.abspath('..\src'))
+import os.path
 
-from main import *
-from credentials import *
+from src.main import *
+from src.credentials import *
 
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -57,4 +56,4 @@ def input_track():
         recommended_text=results, track_uri=text_input)
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=8000)
+    app.run(host='localhost', port=8000, debug=True)

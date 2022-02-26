@@ -1,15 +1,16 @@
-from pyexpat import model
 from pyspark.sql import SparkSession
-from sklearn.preprocessing import scale
 
-from data_preparation import json_directory, combine_json, get_track_uri, get_distinct_track_uri
-from spotipy_api import spotipy_credentials, get_audio_features
-from kmeans_model import convert_to_vector, scale_data, find_optimal_k, model_fitting
-from song_prediction import label_new_song, input_cluster_comparison
-from credentials import cid, secret
+import sys
+import os
+
+from src.data_preparation import json_directory, combine_json, get_track_uri, get_distinct_track_uri
+from src.spotipy_api import spotipy_credentials, get_audio_features
+from src.kmeans_model import convert_to_vector, scale_data, find_optimal_k, model_fitting
+from src.song_prediction import label_new_song, input_cluster_comparison
+from src.credentials import cid, secret
 
 from pathlib import Path
-import os
+
 
 def processing_dataset():
     '''
@@ -72,29 +73,30 @@ def recommend_song(input_track_uri, modelPath, scalePath, number_of_recommendati
 
 
 def main(input_track_uri, number_of_recommendations):
-    from credentials import cid, secret
+
+    input_track_uri = input_track_uri
+    number_of_recommendations = number_of_recommendations
+
+    from src.credentials import cid, secret
 
     spark = SparkSession.builder.appName('Spotify_Music_Recomendation').getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
 
     path = os.getcwd()
-    parent = os.path.dirname(path)
 
     # Path to dataset
     # dataset_path = parent + "\\dataset"
     # files_path = json_directory(dataset_path)
-
 
     # Spotify API: Input Client ID and Secret ID
     cid = cid
     secret = secret
 
     # Spotify: Input track uri for similar song recommendations
-    # input_track_uri = "18asYwWugKjjsihZ0YvRxO"
 
     # Path to kmeansModel and scaleModel
-    modelPath = parent + "\\kmeans_model"
-    scalePath = parent + "\\standardized_scale"
+    modelPath = ".\\kmeans_model"
+    scalePath = ".\\standardized_scale"
 
     # Input number of requested song recommendations
     # number_of_recommendations = 10
@@ -110,46 +112,5 @@ def main(input_track_uri, number_of_recommendations):
     recommendation_df = recommend_song(input_track_uri, modelPath, scalePath, number_of_recommendations, sp, spark)
 
     print("Based on your chosen song, we think that you may enjoy these:")
-    print(recommendation_df[['Artist', 'Song Name', 'uri']])
+    # print(recommendation_df[['Artist', 'Song Name', 'uri']])
     return recommendation_df[['Artist', 'Song Name', 'uri']]
-
-
-if __name__ == "__main__":
-    main()
-    # spark = SparkSession.builder.appName('Spotify_Music_Recomendation').getOrCreate()
-    # spark.sparkContext.setLogLevel("ERROR")
-
-    # path = os.getcwd()
-    # parent = os.path.dirname(path)
-
-    # # Path to dataset
-    # # dataset_path = parent + "\\dataset"
-    # # files_path = json_directory(dataset_path)
-
-
-    # # Spotify API: Input Client ID and Secret ID
-    # cid = cid
-    # secret = secret
-
-    # # Spotify: Input track uri for similar song recommendations
-    # input_track_uri = "18asYwWugKjjsihZ0YvRxO"
-
-    # # Path to kmeansModel and scaleModel
-    # modelPath = parent + "\\kmeans_model"
-    # scalePath = parent + "\\standardized_scale"
-
-    # # Input number of requested song recommendations
-    # number_of_recommendations = 10
-
-    # sp = connect_to_spotify_api(cid, secret)
-
-    # # Below 3 lines used to pre-process the data and build k-means model
-    # # distinct_tracks = processing_dataset()
-    # # audio_features = audio_feature_extraction(distinct_tracks, sp)
-    # # prediction_df = building_model()
-
-
-    # recommendation_df = recommend_song(input_track_uri, modelPath, scalePath, number_of_recommendations)
-
-    # print("Based on your chosen song, we think that you may enjoy these:")
-    # print(recommendation_df[['Artist', 'Song Name']])

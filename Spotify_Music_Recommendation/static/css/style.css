@@ -152,6 +152,15 @@ a:link {
 	color: #fff;
 	display: inline-table;
 	text-decoration: none;
+	/* text-align: center; */
+}
+
+/* a.link */
+footer { 
+	width: 100%;
+	text-align: center;
+	padding: 2rem;
+	color: white;
 }
 
 table {
@@ -235,9 +244,12 @@ input:focus {
 	box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-a.link {
-	width: 100%;
-	text-align: center;
-	padding: 2rem;
-	color: white;
-}
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	  -webkit-user-select: none; /* Safari */
+	   -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Old versions of Firefox */
+		  -ms-user-select: none; /* Internet Explorer/Edge */
+			  user-select: none; /* Non-prefixed version, currently
+									supported by Chrome, Edge, Opera and Firefox */
+  }
