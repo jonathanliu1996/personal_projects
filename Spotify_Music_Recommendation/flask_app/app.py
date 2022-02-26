@@ -57,4 +57,4 @@ def input_track():
         recommended_text=results, track_uri=text_input)
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=8000, debug=True)
+    app.run(host='localhost', port=8000)
