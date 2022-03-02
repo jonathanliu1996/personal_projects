@@ -1,13 +1,16 @@
 End-to-end project created to recommend Spotify songs based on an input track uri
 
-Full project utilized the 'Million Playlist' dataset provided by Spotify
+Full project utilized the 'Million Playlist' dataset provided by Spotify.
+
 Src here contains only 2 json files with playlists, the rest of the 9,998 json files can be found in the link
     https://www.aicrowd.com/challenges/spotify-million-playlist-dataset-challenge
 
 
 Project has been deployed on Heroku - note that due to slug size limit on the platform, a few clusters had to be removed to ensure deployment.
+
 Source code here may provide different recommendations compared to the algorithm deployed on Heroku
     http://recommendedsongs.herokuapp.com/
+
 
 
 By inputting a track uri from Spotify (found in the URL), a K-means machine learning model provides a list of 5 song recommendations.
